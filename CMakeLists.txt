@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.12)
 
 project(leetcode)
 
-add_executable(leetcode 34.在排序数组中查找元素的第一个和最后一个位置.cpp)
+add_executable(leetcode 40.组合总和-ii.cpp)
