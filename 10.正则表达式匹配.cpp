@@ -13,7 +13,9 @@ class Solution {
 public:
     void subFun(string s, string p, char pre)
     {
-        if(s.empty() && p.empty())
+        if(s.empty() && 
+            (p.empty() || (p.size() == 1 && p.back() == '*') || (p.size() == 2 && p[0] == '*'))
+        )
         {
             res = true;
             return;
@@ -34,26 +36,32 @@ public:
         {
             if(pre == '.')
             {
-                while(!s.empty())
-                {
-                    s.pop_back();
-                    subFun(s,p,pre);
-                }
+                string p_backup = p;
+
                 char q = p.back();
                 p.pop_back();
                 subFun(s,p,q);
+
+                while(!s.empty())
+                {
+                    s.pop_back();
+                    subFun(s,p_backup,pre);
+                }
             }
             else
             {
+                string p_backup = p;
+
+                char q = p.back();
+                p.pop_back();
+                subFun(s,p,q);
+
                 while(!s.empty())
                 {
                     if(s.back()!=pre) break;
                     s.pop_back();
-                    subFun(s,p,pre);
+                    subFun(s,p_backup,pre);
                 }
-                char q = p.back();
-                p.pop_back();
-                subFun(s,p,q);
             }
         }
         else if(s.back() != p.back())
@@ -63,6 +71,7 @@ public:
             {
                 char q = p.back();
                 p.pop_back();
+                // p.pop_back();
                 subFun(s,p,q);
             }
             else
@@ -90,6 +99,6 @@ public:
 int main()
 {
     Solution s;
-    cout << s.isMatch("aaa","a*a") << endl;
+    cout << s.isMatch("bbbba",".*a*a") << endl;
     return 0;
 }
